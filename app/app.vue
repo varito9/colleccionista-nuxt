@@ -2,6 +2,6 @@
   <div>
     <TheNavBar />
 
-    <NuxtPage />
+    <NuxtRouteAnnouncer /><NuxtPage />
   </div>
 </template>
