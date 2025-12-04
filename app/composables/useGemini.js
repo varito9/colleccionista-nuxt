@@ -27,7 +27,7 @@ export const useGemini = () => {
 
       // 2. Definimos el prompt
 
-      const prompt = `Diu una beguda que maridi be amb aquest menjar "${itemName}". Màxim 40 paraules.`;
+      const prompt = `Dime un resumen de "${itemName}". máximo 60 palabras.`;
 
       // 3. Llamamos a generateContent (Esta librería permite pasar el string directo)
 
