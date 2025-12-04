@@ -37,14 +37,15 @@
             </button>
           </div>
 
-          <div class="ai-container">
+
+        </div>
+
+      </div>
+                <div class="ai-container">
             <p v-if="aiResponse" class="response-box">
               {{ aiResponse }}
             </p>
           </div>
-        </div>
-
-      </div>
       <button @click="goBack" class="back-btn">Volver</button>
     </div>
   </div>
@@ -121,7 +122,7 @@ function goBack() {
 }
 
 .detalle-container {
-  background: white;
+  background: white;  
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -290,4 +291,5 @@ h1 {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 </style>
