@@ -6,7 +6,11 @@
       <h2>Top Animes Populares</h2>
       <div v-if="cargandoTop">Cargando top...</div>
       <ul v-else class="anime-grid">
-        <li v-for="anime in topAnimes" :key="anime.mal_id" @click="verDetalle(anime.mal_id)">
+        <li
+          v-for="anime in topAnimes"
+          :key="anime.mal_id"
+          @click="verDetalle(anime.mal_id)"
+        >
           <ItemCard :item="anime" />
         </li>
       </ul>
@@ -16,7 +20,11 @@
       <h2>Temporada Actual</h2>
       <div v-if="cargandoSeason">Cargando temporada...</div>
       <ul v-else class="anime-grid">
-        <li v-for="anime in seasonAnimes" :key="anime.mal_id" @click="verDetalle(anime.mal_id)">
+        <li
+          v-for="anime in seasonAnimes"
+          :key="anime.mal_id"
+          @click="verDetalle(anime.mal_id)"
+        >
           <ItemCard :item="anime" />
         </li>
       </ul>
@@ -25,39 +33,39 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { getTopAnime, getSeasonNow } from '../services/communicationManager'
-import ItemCard from '../components/ItemCard.vue'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { getTopAnime, getSeasonNow } from "../services/communicationManager";
+import ItemCard from "../components/ItemCard.vue";
 
-const router = useRouter()
+const router = useRouter();
 
-const topAnimes = ref([])
-const seasonAnimes = ref([])
+const topAnimes = ref([]);
+const seasonAnimes = ref([]);
 
-const cargandoTop = ref(true)
-const cargandoSeason = ref(true)
+const cargandoTop = ref(true);
+const cargandoSeason = ref(true);
 
 onMounted(async () => {
   try {
-    topAnimes.value = await getTopAnime()
+    topAnimes.value = await getTopAnime();
   } catch (error) {
-    console.error('Error cargando top animes:', error)
+    console.error("Error cargando top animes:", error);
   } finally {
-    cargandoTop.value = false
+    cargandoTop.value = false;
   }
 
   try {
-    seasonAnimes.value = await getSeasonNow()
+    seasonAnimes.value = await getSeasonNow();
   } catch (error) {
-    console.error('Error cargando temporada:', error)
+    console.error("Error cargando temporada:", error);
   } finally {
-    cargandoSeason.value = false
+    cargandoSeason.value = false;
   }
-})
+});
 
 function verDetalle(id) {
-  router.push(`/item?id=${id}`)
+  router.push(`/item?id=${id}`);
 }
 </script>
 

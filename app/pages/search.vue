@@ -16,21 +16,21 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import ItemCard from '../components/ItemCard.vue'
-import SearchBar from '../components/SearchBar.vue'
-import { useSearch } from '../composables/useSearch'
+import { useRouter } from "vue-router";
+import ItemCard from "../components/ItemCard.vue";
+import SearchBar from "../components/SearchBar.vue";
+import { useSearch } from "../composables/useSearch";
 
-const router = useRouter()
-const { query, results, loading, search } = useSearch()
+const router = useRouter();
+const { query, results, loading, search } = useSearch();
 
 async function handleSearch() {
-  if (!query.value) return
-  await search()
+  if (!query.value) return;
+  await search();
 }
 
 function verDetalle(id) {
-  router.push(`/item?id=${id}`)
+  router.push(`/item?id=${id}`);
 }
 </script>
 

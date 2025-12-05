@@ -13,15 +13,15 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import { useFavoritesStore } from '../stores/favoritesStore'
-import ItemCard from '../components/ItemCard.vue'
+import { useRouter } from "vue-router";
+import { useFavoritesStore } from "../stores/favoritesStore";
+import ItemCard from "../components/ItemCard.vue";
 
-const store = useFavoritesStore()
-const router = useRouter()
+const store = useFavoritesStore();
+const router = useRouter();
 
 function verDetalle(id) {
-  router.push(`/item?id=${id}`)
+  router.push(`/item?id=${id}`);
 }
 </script>
 

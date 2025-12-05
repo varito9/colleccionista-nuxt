@@ -5,7 +5,11 @@
     <div v-else-if="anime" class="detalle-container">
       <h1>{{ anime.title }}</h1>
       <div class="detalle-content">
-        <img :src="anime.images.jpg.large_image_url" :alt="anime.title" class="detalle-img" />
+        <img
+          :src="anime.images.jpg.large_image_url"
+          :alt="anime.title"
+          class="detalle-img"
+        />
         <div class="detalle-info">
           <p class="synopsis">{{ anime.synopsis }}</p>
           <div class="stats">
@@ -14,93 +18,93 @@
             <p><strong>Score:</strong> {{ anime.score }}</p>
             <p><strong>Status:</strong> {{ anime.status }}</p>
           </div>
-          <a :href="anime.url" target="_blank" class="mal-link">Ver en MyAnimeList</a>
-          
+          <a :href="anime.url" target="_blank" class="mal-link"
+            >Ver en MyAnimeList</a
+          >
+
           <div class="actions-container">
-            <button 
-              @click="toggleFavorite" 
+            <button
+              @click="toggleFavorite"
               class="fav-btn"
               :class="{ 'is-favorite': isFavorite }"
             >
-              {{ isFavorite ? 'Quitar de Favoritos' : 'Añadir a Favoritos' }}
+              {{ isFavorite ? "Quitar de Favoritos" : "Añadir a Favoritos" }}
             </button>
-            
-            <button 
+
+            <button
               class="ai-generate-btn"
-              @click="generateCreativeText(anime.title)" 
+              @click="generateCreativeText(anime.title)"
               :disabled="isGenerating"
             >
               <span v-if="!isGenerating"> Generar Resumen IA</span>
               <span v-else class="loading-state">
-                <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span> Pensant
+                <span class="dot">.</span><span class="dot">.</span
+                ><span class="dot">.</span> Pensant
               </span>
             </button>
           </div>
-
-
         </div>
-
       </div>
-                <div class="ai-container">
-            <p v-if="aiResponse" class="response-box">
-              {{ aiResponse }}
-            </p>
-          </div>
+      <div class="ai-container">
+        <p v-if="aiResponse" class="response-box">
+          {{ aiResponse }}
+        </p>
+      </div>
       <button @click="goBack" class="back-btn">Volver</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { getAnimeById } from '../services/communicationManager'
-import { useFavoritesStore } from '../stores/favoritesStore'
+import { ref, onMounted, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { getAnimeById } from "../services/communicationManager";
+import { useFavoritesStore } from "../stores/favoritesStore";
 import { useGemini } from "../composables/useGemini";
 
 const { aiResponse, isGenerating, generateCreativeText } = useGemini();
-const route = useRoute()
-const router = useRouter()
-const store = useFavoritesStore()
+const route = useRoute();
+const router = useRouter();
+const store = useFavoritesStore();
 
-const anime = ref(null)
-const loading = ref(true)
-const error = ref(null)
+const anime = ref(null);
+const loading = ref(true);
+const error = ref(null);
 
 const isFavorite = computed(() => {
-  return anime.value ? store.isFavorite(anime.value.mal_id) : false
-})
+  return anime.value ? store.isFavorite(anime.value.mal_id) : false;
+});
 
 onMounted(async () => {
-  const id = route.query.id
+  const id = route.query.id;
   if (!id) {
-    error.value = 'No se especificó un ID de anime.'
-    loading.value = false
-    return
+    error.value = "No se especificó un ID de anime.";
+    loading.value = false;
+    return;
   }
 
   try {
-    anime.value = await getAnimeById(id)
+    anime.value = await getAnimeById(id);
   } catch (e) {
-    error.value = 'Error al cargar los detalles del anime.'
-    console.error(e)
+    error.value = "Error al cargar los detalles del anime.";
+    console.error(e);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-})
+});
 
 function toggleFavorite() {
-  if (!anime.value) return
-  
+  if (!anime.value) return;
+
   if (isFavorite.value) {
-    store.removeFavorite(anime.value.mal_id)
+    store.removeFavorite(anime.value.mal_id);
   } else {
-    store.addFavorite(anime.value)
+    store.addFavorite(anime.value);
   }
 }
 
 function goBack() {
-  router.back()
+  router.back();
 }
 </script>
 
@@ -111,7 +115,8 @@ function goBack() {
   padding: 20px;
 }
 
-.loading, .error {
+.loading,
+.error {
   text-align: center;
   font-size: 1.2rem;
   margin-top: 50px;
@@ -122,10 +127,10 @@ function goBack() {
 }
 
 .detalle-container {
-  background: white;  
+  background: white;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -144,7 +149,7 @@ h1 {
   height: 100%;
   width: 35%;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   object-fit: cover;
 }
 
@@ -221,7 +226,7 @@ h1 {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .detalle-img {
     width: 100%;
     max-width: 350px;
@@ -269,12 +274,22 @@ h1 {
   animation: bounce 1.4s infinite ease-in-out both;
 }
 
-.dot:nth-child(1) { animation-delay: -0.32s; }
-.dot:nth-child(2) { animation-delay: -0.16s; }
+.dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
 
 @keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
 }
 
 .response-box {
@@ -288,8 +303,13 @@ h1 {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
 </style>
